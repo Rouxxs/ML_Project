@@ -3,6 +3,7 @@ import torchvision.models as models
 import torch.nn as nn
 from models.title_models import BertFeatureExtractor
 from models.ratings_models import RatingsExtractModel
+from torchvision.models import resnet50, ResNet50_Weights
 
 # Concat
 class CombinedModel(nn.Module):
