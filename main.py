@@ -61,8 +61,8 @@ def main(args):
     movies_test = preprocess_df(movies_test)
 
     # Add ratings
-    movies_train = add_ratings(movies_train, args.data_path)
-    movies_test = add_ratings(movies_test, args.data_path)
+    movies_train = add_ratings(movies_train, args.data_path + "movie_ratings.txt")
+    movies_test = add_ratings(movies_test, args.data_path + "movie_ratings.txt")
 
     # Preprocess title
     movies_test.loc[:, 'title'] = movies_test['title'].apply(lambda x: preprocess_title(x))
