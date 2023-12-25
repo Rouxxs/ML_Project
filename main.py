@@ -126,7 +126,7 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
             else:
                 out = model(*x)
             loss = criterion(out, genres)
-            total_loss += loss.item()
+            total_train_loss += loss.item()
 
             optimizer.zero_grad()
             loss.backward()
