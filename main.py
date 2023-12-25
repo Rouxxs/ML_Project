@@ -186,7 +186,5 @@ def eval(args, test_dataloader, num_classes, device):
     print(f'Test Accuracy: {acc:^10.3f}|Test Loss: {test_loss:^10.3f}|Precision: {precision:^10.3f}|Recall: {recall:^10.3f}|F1-Score: {f1:^10.3f}')
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-            'Training and evaluation script', parents=[get_args_parser()])
-    args = parser.parse_args()
+    args = get_args_parser()
     main(args)
