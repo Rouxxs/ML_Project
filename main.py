@@ -68,7 +68,6 @@ def main(args):
     # Preprocess title
     movies_test.loc[:, 'title'] = movies_test['title'].apply(lambda x: preprocess_title(x))
     movies_train.loc[:, 'title'] = movies_train['title'].apply(lambda x: preprocess_title(x))
-    print(len(movies_train))
     # Data loader
     train_set = MLDataset(movies_train, args.data_path)
     test_set = MLDataset(movies_test, args.data_path)
@@ -143,11 +142,11 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
                 ratings = ratings.to(device)
                 genres = genres.to(device)
 
-                x = choosing_x(image, ratings, title, args.mode, mtype)
                 if (args.mode == "single"):
+                    x = choosing_x(image, ratings, title, args.mode, mtype)
                     out = model(x)
                 else:
-                    out = model(*x)
+                    out = model(image, ratings, title)
                 loss = criterion(out, genres)
                 outputs.append(out)
                 gts.append(genres)
@@ -186,7 +185,11 @@ def eval(args, test_dataloader, num_classes, device):
             ratings = ratings.to(device)
             genres = genres.to(device)
 
-            x = choosing_x(image, ratings, title, args.mode, args.type)
+            if (args.mode == "single"):
+                x = choosing_x(image, ratings, title, args.mode, mtype)
+                out = model(x)
+            else:
+                out = model(image, ratings, title)
             loss = criterion(out, genres)
             outputs.append(out)
             gts.append(genres)
