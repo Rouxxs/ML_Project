@@ -9,7 +9,7 @@ class BertFeatureExtractor(nn.Module):
         super(BertFeatureExtractor, self).__init__()
         self.bert_model = BertModel.from_pretrained(model_name)
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
-        
+
     def forward(self, input_text):
         # Tokenize and encode the input text
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
