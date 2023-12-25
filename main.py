@@ -113,7 +113,7 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
         total_train_loss = 0
 
         model.train()
-        for image, title, ratings, genres in tqdm(train_dataloader):
+        for idx, (image, title, ratings, genres) in enumerate(train_dataloader):
             image = image.to(device)
             # title = title.to(device)
             ratings = ratings.to(device)
