@@ -1,8 +1,8 @@
 import torch
 import torchvision.models as models
 import torch.nn as nn
-from title_models import BertFeatureExtractor
-from ratings_model import RatingsExtractModel
+from models.title_models import BertFeatureExtractor
+from models.ratings_models import RatingsExtractModel
 
 # Concat
 class CombinedModel(nn.Module):
