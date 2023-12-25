@@ -153,7 +153,6 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
 
                 if (args.mode == "single"):
                     x = choosing_x(image, ratings, title, args.mode, mtype)
-                    print(x)
                     out = model(x)
                 else:
                     out = model(image, ratings, title)
