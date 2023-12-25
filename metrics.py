@@ -1,9 +1,8 @@
 import torch
 from torchmetrics.classification import MultilabelF1Score, MultilabelRecall, MultilabelPrecision, MultilabelAccuracy
 
-num_classes = 18
 
-def metrics(preds, gts):
+def metrics(preds, gts, device, num_classes = 18):
     f1 = MultilabelF1Score(num_labels=num_classes, average='macro', threshold=0.8)
     f1 = f1.to(device)
     recall = MultilabelRecall(num_labels=num_classes, average='macro', threshold=0.8)
