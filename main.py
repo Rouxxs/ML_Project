@@ -57,8 +57,8 @@ def main(args):
     movies_test['img_path'] = movies_test.apply(lambda row: os.path.join(folder_img_path, f'{row.id}.jpg'), axis = 1)
 
     # Remove rows that the corresponding img does not exit
-    movies_train = get_dataframe(movies_train)
-    movies_test = get_dataframe(movies_test)
+    movies_train = preprocess_df(movies_train)
+    movies_test = preprocess_df(movies_test)
 
     # Add ratings
     movies_train = add_ratings(movies_train, args.data_path)
