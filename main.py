@@ -195,7 +195,7 @@ def eval(args, test_dataloader, num_classes, device):
     with torch.no_grad():
         for image, title, ratings, genres in test_dataloader:
             image = image.to(device)
-            title = title.to(device)
+            # title = title.to(device)
             ratings = ratings.to(device)
             genres = genres.to(device)
 
