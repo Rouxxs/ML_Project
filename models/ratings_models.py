@@ -5,7 +5,7 @@ import torch.nn as nn
 
 class RatingsTestModel(nn.Module):
     def __init__(self, n_classes):
-        super(RatingsModel, self).__init__()
+        super(RatingsTestModel, self).__init__()
         self.fc1 = nn.Linear(6040, 3020)
         self.relu1 = nn.ReLU()
         self.dropout1 = nn.Dropout(p=0.2)
