@@ -123,8 +123,10 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
 
             if (args.mode == "single"):
                 out = model(x)
+                print("vl single")
             else:
                 out = model(*x)
+            print(out.shape)
             loss = criterion(out, genres)
             total_train_loss += loss.item()
 
