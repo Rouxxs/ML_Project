@@ -44,9 +44,11 @@ class CombinedModel(nn.Module):
     # print(title_features.shape)
     # image
     image_features = self.image_extractor(image)
+    print("Poster before:" + image_features.shape)
+
     image_features = image_features.reshape(image_features.shape[:2])
-    print("Poster")
-    print(image_features.shape)
+    print("Poster after" + image_features.shape)
+    
     # ratings
     ratings_features = self.ratings_extractor(rating)
     # print(ratings_features.shape)
