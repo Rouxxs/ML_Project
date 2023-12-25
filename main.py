@@ -68,7 +68,7 @@ def main(args):
     # Preprocess title
     movies_test.loc[:, 'title'] = movies_test['title'].apply(lambda x: preprocess_title(x))
     movies_train.loc[:, 'title'] = movies_train['title'].apply(lambda x: preprocess_title(x))
-
+    print(len(movies_train))
     # Data loader
     print("Prepare DataLoader...")
     train_set = MLDataset(movies_train, args.data_path)
