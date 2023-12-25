@@ -4,7 +4,7 @@ import torch
 import argparse
 from utils import *
 from dataset import MLDataset
-from models import * 
+from models import combined_models, poster_models, ratings_models, title_models 
 from metrics import metrics
 
 from torch import nn
