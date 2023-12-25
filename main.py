@@ -25,8 +25,9 @@ def get_args_parser():
 
     parser.add_argument('--mode', default='combined', help="combined or single model")
     parser.add_argument('--type', default='', help="model type poster or title or ratings, only using this when --mode==single")
-    parser.add_argument('--model', default='CombinedModel', help="model name (make sure to choose a model that match with --mode and --type)")
+    parser.add_argument('--model', default='CombinedModel', help="model name (make sure to choose a model that match with --mode and --type)", type=str)
     parser.add_argument('--eval', action='store_true')
+    parser.add_argument('--continued', action='store_true', help="continue from checkpoints")
     
     parser.add_argument('--seed', default=1711, type=int)
     return parser
@@ -107,6 +108,8 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
     NUM_EP = args.epochs
 
     checkpoints = args.checkpoints + args.model + ".pt"
+    if args.continued:
+        model.load_state_dict(torch.load(args.checkpoints + args.model + ".pt"))
 
     best_f1 = 0
     best_epoch = 0
