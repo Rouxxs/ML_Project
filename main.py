@@ -26,6 +26,7 @@ def get_args_parser():
     parser.add_argument('--mode', default='combined', help="combined or single model")
     parser.add_argument('--type', default='', help="model type poster or title or ratings, only using this when --mode==single")
     parser.add_argument('--model', default='CombinedModel', help="model name (make sure to choose a model that match with --mode and --type)")
+    parser.add_argument('--eval', default='False', type=bool)
     
     parser.add_argument('--seed', default=1711, type=int)
     return parser
@@ -77,11 +78,15 @@ def main(args):
     test_dataloader = DataLoader(test_set, batch_size=BATCH_SIZE)
     print("Finished loading data.")
 
-    print("Start training:")
-    training(args, train_dataloader, test_dataloader, num_classes, device)
+    if (args.eval == True):
+        print("Start eval:")
+        eval(args, test_dataloader, num_classes, device)
+    else:
+        print("Start training:")
+        training(args, train_dataloader, test_dataloader, num_classes, device)
 
-    print("Start eval:")
-    eval(args, test_dataloader, num_classes, device)
+        print("Start eval:")
+        eval(args, test_dataloader, num_classes, device)
 
 def training(args, train_dataloader, test_dataloader, num_classes, device):
     model = getattr(combined_models, args.model)(num_classes)
@@ -170,7 +175,16 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
     print(f'Epoch {best_epoch}: Train_Loss: {best_value_tuple[0]:^10.3f}|Test Accuracy: {best_value_tuple[1]:^10.3f}|Precision: {best_value_tuple[2]:^10.3f}|Recall: {best_value_tuple[3]:^10.3f}|F1-Score: {best_f1:^10.3f}')
 
 def eval(args, test_dataloader, num_classes, device):
-    model = getattr(models, args.model)(num_classes)
+    model = getattr(combined_models, args.model)(num_classes)
+    mtype = args.type
+    if args.mode == "single":
+        if mtype == "poster":
+            model = getattr(poster_models, args.model)(num_classes)
+        elif mtype == "title":
+            model = getattr(title_models, args.model)(num_classes)
+        elif mtype == "ratings":
+            model = getattr(ratings_models, args.model)(num_classes)
+
     model.to(device)
     model.load_state_dict(torch.load(args.checkpoints + args.model + ".pt"))
     model.eval()
