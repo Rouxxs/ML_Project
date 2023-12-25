@@ -4,7 +4,7 @@ import torch
 import argparse
 from utils import *
 from dataset import MLDataset
-from models import *
+from models import * as models
 from metrics import metrics
 
 from torch import nn
@@ -85,7 +85,7 @@ def main(args):
     eval(args, test_dataloader, num_classes, device)
 
 def training(args, train_dataloader, test_dataloader, num_classes, device):
-    model = getattr(model, args.model)(num_classes)
+    model = getattr(models, args.model)(num_classes)
     model.to(device)
     mtype = args.type
     lr = args.lr
@@ -157,7 +157,7 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
     print(f'Epoch {best_epoch}: Train_Loss: {best_value_tuple[0]:^10.3f}|Test Accuracy: {best_value_tuple[1]:^10.3f}|Precision: {best_value_tuple[2]:^10.3f}|Recall: {best_value_tuple[3]:^10.3f}|F1-Score: {best_f1:^10.3f}')
 
 def eval(args, test_dataloader, num_classes, device):
-    model = getattr(model, args.model)(num_classes)
+    model = getattr(models, args.model)(num_classes)
     model.to(device)
     model.load_state_dict(torch.load(args.checkpoints + args.model + ".pt"))
     model.eval()
