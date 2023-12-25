@@ -26,7 +26,7 @@ def get_args_parser():
     parser.add_argument('--mode', default='combined', help="combined or single model")
     parser.add_argument('--type', default='', help="model type poster or title or ratings, only using this when --mode==single")
     parser.add_argument('--model', default='CombinedModel', help="model name (make sure to choose a model that match with --mode and --type)")
-    parser.add_argument('--eval', default='False', type=bool)
+    parser.add_argument('--eval', action='store_true')
     
     parser.add_argument('--seed', default=1711, type=int)
     return parser
