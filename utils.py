@@ -21,8 +21,10 @@ def add_ratings(df, path):
 
 def preprocess_title(text):
     text = text.lower()
-    text = text[:-5].strip()
-    text = text[:text.find('(')].strip()
+    text = text[:-5].strip()  # remove (year)
+    text = text[:text.find('(')].strip() 
+    # rearrange the title
     if len(text.split(',')) > 1:
         text = text.split(',')[1].strip() + ' ' + text.split(',')[0].strip()
     return text
+

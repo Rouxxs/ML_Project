@@ -1,6 +1,8 @@
 import torch
 import torchvision.models as models
 import torch.nn as nn
+from transformers import BertTokenizer, BertModel
+
 
 class BertFeatureExtractor(nn.Module):
     def __init__(self, model_name='bert-base-uncased'):
