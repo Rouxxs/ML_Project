@@ -38,4 +38,3 @@ def choosing_x(image, ratings, title, mode, type):
         return title
     elif mtype == "ratings":
         return ratings
-  return (image, ratings, title)

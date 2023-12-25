@@ -118,13 +118,11 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
             ratings = ratings.to(device)
             genres = genres.to(device)
 
-            x = choosing_x(image, ratings, title, args.mode, mtype)
-            out = model(image, ratings, title)
-            # if (args.mode == "single"):
-            #     out = model(x)
-            # else:
-            #     out = model(*x)
-            print(out.shape)
+            if (args.mode == "single"):
+                x = choosing_x(image, ratings, title, args.mode, mtype)
+                out = model(x)
+            else:
+                out = model(image, ratings, title)
             loss = criterion(out, genres)
             total_train_loss += loss.item()
 
@@ -163,7 +161,7 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
         f1, acc, recall, precision = metrics(outputs, gts, device)
         print(f'Epoch {epoch}: Train_Loss: {train_loss:^10.3f}|Test Accuracy: {acc:^10.3f}|Precision: {precision:^10.3f}|Recall: {recall:^10.3f}|F1-Score: {f1:^10.3f}')
         
-        if f1_all > best_f1:
+        if f1 > best_f1:
             best_f1 = f1
             best_epoch = epoch
             best_value_tuple = train_loss, acc, precision, recall
