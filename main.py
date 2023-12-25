@@ -70,7 +70,6 @@ def main(args):
     movies_train.loc[:, 'title'] = movies_train['title'].apply(lambda x: preprocess_title(x))
     print(len(movies_train))
     # Data loader
-    print("Prepare DataLoader...")
     train_set = MLDataset(movies_train, args.data_path)
     test_set = MLDataset(movies_test, args.data_path)
 
@@ -120,11 +119,11 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
             genres = genres.to(device)
 
             x = choosing_x(image, ratings, title, args.mode, mtype)
-
-            if (args.mode == "single"):
-                out = model(x)
-            else:
-                out = model(*x)
+            out = model(image, ratings, title)
+            # if (args.mode == "single"):
+            #     out = model(x)
+            # else:
+            #     out = model(*x)
             print(out.shape)
             loss = criterion(out, genres)
             total_train_loss += loss.item()
@@ -147,6 +146,10 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
                 genres = genres.to(device)
 
                 x = choosing_x(image, ratings, title, args.mode, mtype)
+                if (args.mode == "single"):
+                    out = model(x)
+                else:
+                    out = model(*x)
                 loss = criterion(out, genres)
                 outputs.append(out)
                 gts.append(genres)
