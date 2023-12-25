@@ -16,7 +16,7 @@ from tqdm import tqdm
 
 def get_args_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--lr', default=2e-4, type=float, help="learning rate setting")
+    parser.add_argument('--lr', default=1e-4, type=float, help="learning rate setting")
     parser.add_argument('--batch_size', default=64, type=int)
     parser.add_argument('--epochs', default=50, type=int)
     parser.add_argument('--data_path', default='data/', help="path to the dataset folder")
