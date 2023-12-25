@@ -188,7 +188,7 @@ def eval(args, test_dataloader, num_classes, device):
     model.to(device)
     model.load_state_dict(torch.load(args.checkpoints + args.model + ".pt"))
     model.eval()
-    criterion = CrossEntropyLoss()
+    criterion = nn.CrossEntropyLoss()
     total_loss_test = 0
     outputs = []
     gts = []
