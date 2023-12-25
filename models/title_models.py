@@ -12,7 +12,7 @@ class BertFeatureExtractor(nn.Module):
 
     def forward(self, input_text):
         # Tokenize and encode the input text
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        device = torch.device('cuda')
         inputs = self.tokenizer(input_text, return_tensors='pt', truncation=True, padding=True)
 
         # Move tensors to the desired device
