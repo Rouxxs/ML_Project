@@ -137,57 +137,82 @@ class CustomModel(nn.Module):
         x = self.fc3(x)
         x = self.sigmoid(x)
         return x
+        
 
-class CustomModel2(nn.Module):
-  def __init__(self, num_classes):
-    super(CustomModel2, self).__init__()
-    # layer 1
-    self.conv1 = nn.Conv2d(3, 64, kernel_size=(3, 3), stride=2, padding=1)
-    self.maxpool1 = nn.MaxPool2d(kernel_size=(2, 2), stride=2)
+class MultiLabelMobileNetV2(nn.Module):
+    def __init__(self, num_classes):
+        super(MultiLabelMobileNetV2, self).__init__()
+        # Load pre-trained MobileNetV2
+        self.mobilenet_v2 = models.mobilenet_v2(pretrained=True)
 
-    # layer 2
-    self.conv2 = nn.Conv2d(64, 128, kernel_size=(3, 3), stride=2, padding=1)
-    self.maxpool2 = nn.MaxPool2d(kernel_size=(2, 2), stride=2)
+        # Modify the last fully connected layer for the number of classes in your problem
+        for param in self.mobilenet_v2.parameters():
+            param.requires_grad = False
+        in_features = self.mobilenet_v2.classifier[1].in_features
+        self.mobilenet_v2.classifier[1] = nn.Sequential(
+                                nn.Linear(in_features, 512),
+                                nn.ReLU(),
+                                nn.Dropout(p=0.2),
 
-    # layer 3
-    self.conv3 = nn.Conv2d(128, 256, kernel_size=(3, 3), stride=2, padding=1)
-    self.maxpool3 = nn.MaxPool2d(kernel_size=(2, 2), stride=2)
+                                nn.Linear(512, 256),
+                                nn.ReLU(),
+                                nn.Dropout(p=0.2),
 
-    # layer 4
-    self.dropout1 = nn.Dropout(0.2)
-    self.flatten1 = nn.Flatten()
-    self.fc1 = nn.Linear(4 * 4 * 256, 128)
+                                nn.Linear(256, num_labels),
+                                nn.Sigmoid()
+                              )
+    def forward(self, x):
+        return self.mobilenet_v2(x)
 
-    #layer 5
-    self.dropout2 = nn.Dropout(0.2)
-    self.fc2 = nn.Linear(128, num_classes)
-    self.sigmoid =  nn.Sigmoid()
+class MultiLabelDenseNet(nn.Module):
+    def __init__(self, num_classes):
+        super(MultiLabelDenseNet, self).__init__()
+        # Load pre-trained DenseNet
+        self.densenet = models.densenet121(pretrained=True)
 
-  def forward(self, x):
-    # layer 1
-    x = self.conv1(x)
-    x = torch.relu(x)
-    x = self.maxpool1(x)
+        # Modify the last fully connected layer for the number of classes in your problem
+        for param in self.densenet.parameters():
+            param.requires_grad = False
+        in_features = self.densenet.classifier.in_features
+        self.densenet.classifier = nn.Sequential(
+                                nn.Linear(in_features, 512),
+                                nn.ReLU(),
+                                nn.Dropout(p=0.2),
 
-    # layer 2
-    x = self.conv2(x)
-    x = torch.relu(x)
-    x = self.maxpool2(x)
+                                nn.Linear(512, 256),
+                                nn.ReLU(),
+                                nn.Dropout(p=0.2),
 
-    # layer 3
-    x = self.conv3(x)
-    x = torch.relu(x)
-    x = self.maxpool3(x)
+                                nn.Linear(256, num_labels),
+                                nn.Sigmoid()
+                              )
 
-    # layer 4
-    x = self.dropout1(x)
-    x = self.flatten1(x)
-    x = self.fc1(x)
-    x = torch.relu(x)
+    def forward(self, x):
+        return self.densenet(x)
 
-    # layer 5
-    x = self.dropout2(x)
-    x = self.fc2(x)
-    x = self.sigmoid(x)
-    return x
+class MultiLabelAlexNet(nn.Module):
+    def __init__(self, num_classes):
+        super(MultiLabelAlexNet, self).__init__()
+        # Load pre-trained AlexNet
+        self.alexnet = models.alexnet(pretrained=True)
+
+        for param in self.alexnet.parameters():
+            param.requires_grad = False
+        # Modify the last fully connected layer for the number of classes in your problem
+        in_features = self.alexnet.classifier[6].in_features
+        self.alexnet.classifier[6] = nn.Sequential(
+                                nn.Linear(in_features, 512),
+                                nn.ReLU(),
+                                nn.Dropout(p=0.2),
+
+                                nn.Linear(512, 256),
+                                nn.ReLU(),
+                                nn.Dropout(p=0.2),
+
+                                nn.Linear(256, num_labels),
+                                nn.Sigmoid()
+                              )
+
+    def forward(self, x):
+        return self.alexnet(x)
 
