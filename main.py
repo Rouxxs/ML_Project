@@ -30,7 +30,7 @@ def get_args_parser():
     return parser
 
 def main(args):
-    torch.manual_seed(args.seed)
+    # torch.manual_seed(args.seed)
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
