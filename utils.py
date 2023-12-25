@@ -30,7 +30,7 @@ def preprocess_title(text):
         text = text.split(',')[1].strip() + ' ' + text.split(',')[0].strip()
     return text
 
-def choosing_x(image, ratings, title, mode, type):
+def choosing_x(image, ratings, title, mode, mtype):
   if mode == "single":
     if mtype == "poster":
         return image
