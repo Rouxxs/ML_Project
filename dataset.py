@@ -9,10 +9,10 @@ from torch.utils.data.dataset import Dataset
 
 
 class MLDataset(Dataset):
-    def __init__(self, data):
+    def __init__(self, data, data_path):
         self.data = data
         # label genre
-        with open('ml1m/content/dataset/genres.txt', 'r') as f:
+        with open(data_path + 'ml1m/content/dataset/genres.txt', 'r') as f:
             genre_all = f.readlines()
             genre_all = [x.replace('\n','') for x in genre_all]
         self.genre2idx = {genre:idx for idx, genre in enumerate(genre_all)}

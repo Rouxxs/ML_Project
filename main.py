@@ -70,8 +70,8 @@ def main(args):
 
     # Data loader
     print("Prepare DataLoader...")
-    train_set = MLDataset(movies_train)
-    test_set = MLDataset(movies_test)
+    train_set = MLDataset(movies_train, args.data_path)
+    test_set = MLDataset(movies_test, args.data_path)
 
     BATCH_SIZE = args.batch_size
     train_dataloader = DataLoader(train_set, batch_size=BATCH_SIZE)
