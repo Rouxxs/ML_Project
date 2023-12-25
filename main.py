@@ -121,7 +121,10 @@ def training(args, train_dataloader, test_dataloader, num_classes, device):
 
             x = choosing_x(image, ratings, title, args.mode, mtype)
 
-            out = model(x)
+            if (args.mode == "single"):
+                out = model(x)
+            else:
+                out = model(*x)
             loss = criterion(out, genres)
             total_loss += loss.item()
 
