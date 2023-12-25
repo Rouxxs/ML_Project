@@ -30,7 +30,7 @@ def get_args_parser():
     return parser
 
 def main(args):
-    # torch.manual_seed(args.seed)
+    torch.manual_seed(args.seed)
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -186,5 +186,5 @@ def eval(args, test_dataloader, num_classes, device):
     print(f'Test Accuracy: {acc:^10.3f}|Test Loss: {test_loss:^10.3f}|Precision: {precision:^10.3f}|Recall: {recall:^10.3f}|F1-Score: {f1:^10.3f}')
 
 if __name__ == '__main__':
-    args = get_args_parser()
+    args = get_args_parser().parse_args()
     main(args)
