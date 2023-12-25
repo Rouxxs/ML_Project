@@ -137,10 +137,10 @@ class CustomModel(nn.Module):
         x = self.fc3(x)
         x = self.sigmoid(x)
         return x
-        
+
 
 class MultiLabelMobileNetV2(nn.Module):
-    def __init__(self, num_classes):
+    def __init__(self, num_labels):
         super(MultiLabelMobileNetV2, self).__init__()
         # Load pre-trained MobileNetV2
         self.mobilenet_v2 = models.mobilenet_v2(pretrained=True)
@@ -165,7 +165,7 @@ class MultiLabelMobileNetV2(nn.Module):
         return self.mobilenet_v2(x)
 
 class MultiLabelDenseNet(nn.Module):
-    def __init__(self, num_classes):
+    def __init__(self, num_labels):
         super(MultiLabelDenseNet, self).__init__()
         # Load pre-trained DenseNet
         self.densenet = models.densenet121(pretrained=True)
@@ -191,7 +191,7 @@ class MultiLabelDenseNet(nn.Module):
         return self.densenet(x)
 
 class MultiLabelAlexNet(nn.Module):
-    def __init__(self, num_classes):
+    def __init__(self, num_labels):
         super(MultiLabelAlexNet, self).__init__()
         # Load pre-trained AlexNet
         self.alexnet = models.alexnet(pretrained=True)
