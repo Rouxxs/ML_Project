@@ -14,6 +14,15 @@ def preprocess_df(dataframe):
   data = dataframe.drop(dataframe[mask].index)
   return data
 
+
+""" 
+The code for convert from user's rating to 
+movie's rating take a lot of time to run, 
+so i only run it once and save the output 
+in a .txt file that can be download from 
+this link: https://drive.google.com/uc?id=1rvmwYsRU9IykFPTlsckDNm4RHO1CxcJ3
+make sure to put it in the data/ folder
+"""
 def add_ratings(df, path):
   with open(path, 'r') as file:
     loaded_dict = json.load(file)
